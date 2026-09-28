@@ -1,8 +1,6 @@
 # Prism Lab - Online Space-time Prism Visualizer
 
-Prism Lab is a browser-based tool for exploring network-constrained space-time prisms. It combines GTFS transit schedules and OpenStreetMap streets with ordered location-and-time anchors, linking a 3D prism to a 2D potential path area at a selected time.
-
-[Meet the team](https://luyuliu.github.io)
+Prism Lab is a browser-based tool for exploring network-constrained space-time prisms; it currently supports transit, walking, biking, and driving mode with travel time and restrictions setting available. It combines GTFS transit schedules and OpenStreetMap streets with ordered location-and-time anchors, linking a 3D prism to a 2D potential path area at a selected time.
 
 ## Features
 
@@ -28,18 +26,9 @@ Walking defaults to 1.4 m/s and biking to 4.5 m/s. Driving uses road speed limit
 
 Open **Data** and choose a GTFS ZIP and a matching OSM PBF. Importing a GTFS feed recenters the map and selects an available service date. Set the 2D map extent before importing the PBF: this extent determines the retained study area. Use **Apply PBF to map area** after changing the extent.
 
-There is no hard PBF file-size limit. Files above 25 MB show advisory text recommending a smaller extract. Large files can still require substantial processing time and memory; clipping them to the study area before import is recommended. Study areas are limited to 60 km across, with additional node, way and graph-capacity checks. GTFS imports allow up to 80 MB compressed and 250 MB of expanded selected tables.
+Large files can still require substantial processing time and memory; clipping them to the study area before import is recommended. Study areas are limited to 60 km across, with additional node, way and graph-capacity checks. GTFS imports allow up to 80 MB compressed and 250 MB of expanded selected tables.
 
-Bundled examples:
-
-| Area | GTFS | Street network |
-| --- | --- | --- |
-| Columbus, Ohio (default) | `data/cota.gtfs.zip` | `data/columbus.osm.pbf` |
-| Auburn, Alabama | `data/auburn.gtfs.zip` | `data/auburn.osm.pbf` |
-
-Select both Auburn files through the import controls to explore Auburn. The full state extracts are not included.
-
-Files are processed locally in the browser. Basemap tile requests are sent to OpenStreetMap and require internet access.
+Files are processed locally in the browser. No data uploaded.
 
 ## Methods and interpretation
 
@@ -54,5 +43,3 @@ The 3D bands represent feasible travel times along individual network links, rat
 - Street data: [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), distributed under the ODbL; source extracts from [Geofabrik](https://download.geofabrik.de/).
 - Transit data: Central Ohio Transit Authority and Auburn University; agency metadata is retained in the GTFS archives.
 - Visualization and processing libraries include Plotly.js, Leaflet, fflate and the bundled OSM PBF schema tooling. Preserve the included library notices and map attribution when redistributing.
-
-The Auburn street extract was prepared from the Alabama OSM extract downloaded September 27, 2026.
