@@ -29,6 +29,8 @@ Files are processed locally in the browser. Basemap tiles require internet acces
 - **PNG image:** export the 3D view.
 - **View JSON:** save a view and reopen it through **Data → Import View JSON** without recalculating. Load matching source files to calculate a different journey.
 - **Model data:** export calculation results for analysis.
+- **2D GeoJSON:** export reachable network links, transit positions and required stays at the displayed time in WGS84 longitude/latitude, with service-date and time properties.
+- **3D Shape (OBJ):** export the displayed Network or Smooth geometry and enabled transit paths, excluding the basemap and slice overlay. Horizontal coordinates are local east/north meters relative to the first anchor; vertical coordinates represent time at 100 meters per minute, not elevation. The file header records the origin and start time. Display simplification is retained.
 - **URL:** copy the address to share settings. Example-city links load their data automatically; custom source files must be imported separately.
 
 ## Methods
