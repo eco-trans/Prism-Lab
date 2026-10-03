@@ -70,3 +70,5 @@ Use **Animate / Pause** to the right of the time slider to play time slices from
 `nThe animation increment selector beside Animate defaults to 1 minute, with 15-second, 30-second, 2-minute and 5-minute options. The time plane interpolates smoothly between computed slices; reachability updates at the selected increment.
 
 The Tutorial button starts an Intro.js walkthrough with highlighted controls, Next, Back, progress and an exit button. Intro.js 8.3.2 is bundled locally; its AGPLv3/commercial licensing notice is included in vendor/introjs-license.md. See https://introjs.com/ for licensing details.
+
+Settings synchronize to the URL using compact query parameters, with default values omitted. Custom anchors use URL-safe encoding; Copy the address to share the selected example, mode, date, speeds, walking budget, anchors, time slice, animation step and layers. Opening an example link restores settings and calculates the prism. Custom GTFS/PBF files are not embedded in links and must be imported again.
