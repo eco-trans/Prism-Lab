@@ -44,7 +44,7 @@ Bundled examples:
 | Columbus, Ohio (default) | `data/cota.gtfs.zip` | `data/columbus.osm.pbf` |
 | Auburn, Alabama | `data/auburn.gtfs.zip` | `data/auburn.osm.pbf` |
 
-Select both Auburn files through the import controls to explore Auburn. The full state extracts are not included.
+Use **Data → Example city** to switch between Columbus and Auburn. Selecting a city automatically loads its matching GTFS and PBF, resets anchors to the example location and calculates the prism. Use **Load selected example** to reload it. The full state extracts are not included.
 
 Files are processed locally in the browser. Basemap tile requests are sent to OpenStreetMap and require internet access.
 
