@@ -37,6 +37,7 @@ export function createAnchorEditor(container,onChange,onPlace){
   const a={id:`a${++serial}`,label:`Stop ${anchors.length-1}`,lon:prev.lon,lat:prev.lat,stayStart:start,stayMinutes:stay};anchors.splice(anchors.length-1,0,a);selected=null;onPlace(null);render(a.id);changed();
  };
  return {
+  load(values){anchors=values.map(a=>({...a,id:`a${++serial}`}));selected=null;render(anchors[0]?.id)},
   values(){return anchors.map(a=>({...a}))},
   reset(lon,lat){anchors=[{id:`a${++serial}`,label:'Origin',lon,lat,stayStart:'08:00',stayMinutes:0},{id:`a${++serial}`,label:'Destination',lon,lat,stayStart:'09:00',stayMinutes:0}];selected=null;render(anchors[0].id)},
   setPosition(id,lon,lat){const a=anchors.find(a=>a.id===id);if(!a)return;a.lon=lon.toFixed(6);a.lat=lat.toFixed(6);selected=null;onPlace(null);render(id);changed()},

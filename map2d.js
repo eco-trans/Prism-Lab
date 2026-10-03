@@ -1,6 +1,6 @@
 export function createMap(onChange,onSelection=()=>{}){
  const map=L.map('map2d',{preferCanvas:true,zoomControl:true}).setView([39.96278,-83.00090],14),renderer=L.canvas({padding:.3});
- L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'}).addTo(map);
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · <a href="https://cosam.auburn.edu/directory/profile.php?id=lzl0116" target="_blank" rel="noopener noreferrer">Luyu Liu</a> · <a href="https://luyuliu.github.io" target="_blank" rel="noopener noreferrer">EcoTrans Lab</a>'}).addTo(map);
  const roads=L.polyline([],{renderer,color:'#c67a0a',weight:2,opacity:.8,interactive:false}).addTo(map),buses=L.layerGroup().addTo(map),activities=L.layerGroup().addTo(map),markers=new Map(),busMarkers=[];let selection=null;
  function select(id){selection=id;onSelection(id);document.getElementById('mapHint').textContent=id?'Click the 2D map to place the selected anchor.':'Place anchors on the map or enter coordinates.';map.getContainer().style.cursor=id?'crosshair':''}
  map.on('click',e=>{if(selection){onChange(selection,e.latlng.lng,e.latlng.lat);select(null)}});
