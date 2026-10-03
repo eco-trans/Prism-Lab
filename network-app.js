@@ -102,12 +102,12 @@ const slicePlayer=latestRenderer(async(value,version)=>{
 const selection=sliceSelection(value=>{showSliceTime(value);planeOverlay.move(value)},value=>slicePlayer.push(value));
 $('slice').oninput=()=>{if(!result||busy)return;stopAnimation();selection.input(+$('slice').value)};
 $('slice').onchange=()=>{if(!result||busy)return;committedSlice=+$('slice').value;selection.change(committedSlice);syncURL()};
-function stopAnimation(){animationPlaying=false;animationVersion++;$('animate').textContent='▶ Animate';$('animate').setAttribute('aria-pressed','false');syncURL()}
-$('animationStep').onchange=()=>{stopAnimation();$('slice').value=committedSlice;selection.input(committedSlice);status('Animation step: '+$('animationStep').selectedOptions[0].textContent)};
+function stopAnimation(){const wasPlaying=animationPlaying;animationPlaying=false;animationVersion++;$('animate').textContent='▶ Animate';$('animate').setAttribute('aria-pressed','false');if(wasPlaying){cancelCompletionFlash();status('Paused',false,'success')}syncURL()}
+$('animationStep').onchange=()=>{stopAnimation();$('slice').value=committedSlice;selection.input(committedSlice)};
 $('animate').onclick=async()=>{
  if(animationPlaying){stopAnimation();$('slice').value=committedSlice;selection.input(committedSlice);return}if(!result||busy)return;
- animationPlaying=true;const version=++animationVersion;$('animate').textContent='Ⅱ Pause';$('animate').setAttribute('aria-pressed','true');
- status('Playing time slices · frames are cached for replay.');
+ cancelCompletionFlash();animationPlaying=true;const version=++animationVersion;$('animate').textContent='Ⅱ Pause';$('animate').setAttribute('aria-pressed','true');
+ status('Playing',false,'working');
  const values=animationTimes(result.start,result.end,committedSlice,+$('animationStep').value);
  try{for(const value of values){
   if(!animationPlaying||version!==animationVersion)break;
@@ -116,7 +116,7 @@ $('animate').onclick=async()=>{
   if(value!==from)await new Promise(resolve=>{const start=performance.now();function tick(now){if(!animationPlaying||version!==animationVersion){resolve();return}const fraction=Math.min(1,(now-start)/400),preview=from+(value-from)*fraction;$('slice').value=preview;selection.input(preview);if(fraction<1)requestAnimationFrame(tick);else resolve()}requestAnimationFrame(tick)});
   if(!animationPlaying||version!==animationVersion)break;
   committedSlice=value;$('slice').value=value;selection.change(value);await slicePlayer.whenIdle();
- }}catch(e){stopAnimation();status('Animation failed: '+e.message,true)}finally{if(version===animationVersion){stopAnimation();status('Animation complete · cached frames are ready for replay.')}}
+ }}catch(e){stopAnimation();status('Animation failed: '+e.message,true)}finally{if(version===animationVersion){stopAnimation();status('Animation complete',false,'success')}}
 };
 $('reset').onclick=()=>{camera={eye:{x:1.7,y:-1.9,z:1.2}};if(result)Plotly.relayout('plot',{'scene.camera':camera})};
 $('photo').onclick=async()=>{if(!result)return;$('photo').disabled=true;try{await slicePlayer.whenIdle();const graph=$('plot'),exportLayout=structuredClone(graph.layout);exportLayout.annotations=[{text:'© OpenStreetMap contributors · Luyu Liu · EcoTrans Lab',x:1,y:0,xref:'paper',yref:'paper',showarrow:false,xanchor:'right',font:{size:10}}];exportLayout.scene.camera=graph._fullLayout.scene._scene.getCamera();const png=await Plotly.toImage({data:[...structuredClone(graph.data),slicePlane(viewBounds)],layout:exportLayout},{format:'png',width:2200,height:1600});const link=$('lastImage');link.href=png;link.download=`prism-${result.mode}-${result.params.date}.png`;link.hidden=false;link.click();status('PNG ready at 2200 × 1600 pixels. Use Download PNG if your browser did not save it automatically.')}catch(e){status('Image export failed: '+e.message,true)}finally{$('photo').disabled=false}};
